@@ -10,6 +10,16 @@
   --color-red-dark: #e03131;
 }
 
+.no-scrollbar {
+  overflow: hidden;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+
 * {
   margin: 0;
   padding: 0;
