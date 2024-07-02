@@ -56,19 +56,33 @@ export default function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const query = "interstellar";
+  const [error, setError] = useState("");
+  const [query, setQuery] = useState("");
+  const tempQuery = "interstellar";
 
   useEffect(function () {
     async function fetchMovies() {
-      setIsLoading(true);
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
-      );
-      const data = await res.json();
-      const movies = data.Search;
-      console.log(movies);
-      setIsLoading(false);
-      setMovies(movies);
+      try {
+        setIsLoading(true);
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${tempQuery}`
+        );
+
+        if (!res.ok) {
+          throw new Error("Something went wrong with fetching movies.");
+        }
+
+        const data = await res.json();
+
+        if (data.Response === "False") throw new Error("Movie not found");
+        const movies = data.Search;
+        setMovies(movies);
+      } catch (error) {
+        console.error(error.message);
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchMovies();
   }, []);
@@ -76,12 +90,16 @@ export default function App() {
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
 
       <Main>
-        <Box>{isLoading ? <Loader /> : <MovieList movies={movies} />}</Box>
+        <Box>
+          {isLoading && <Loader />}
+          {!isLoading && error && <ErrorMessage message={error} />}
+          {!isLoading && !error && <MovieList movies={movies} />}
+        </Box>
 
         <Box>
           <WatchedSummary watched={watched} />
@@ -93,7 +111,16 @@ export default function App() {
 }
 
 function Loader() {
-  return <p>Loading...</p>;
+  return <p className="loader">Loading...</p>;
+}
+
+function ErrorMessage({ message }) {
+  return (
+    <p className="error">
+      <span>❌</span>
+      {message}
+    </p>
+  );
 }
 
 function NavBar({ children }) {
@@ -114,9 +141,7 @@ function Logo() {
   );
 }
 
-function Search() {
-  const [query, setQuery] = useState("");
-
+function Search({ query, setQuery }) {
   return (
     <input
       className="search"
