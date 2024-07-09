@@ -32,14 +32,55 @@ export default function App() {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
 
-  useEffect(function () {
-    document.addEventListener("keydown", function (e) {
-      if (e.code === "Escape") {
-        handleCloseMovie();
-        console.log("Closing");
+  useEffect(
+    function () {
+      const controller = new AbortController();
+
+      async function fetchMovies() {
+        try {
+          setIsLoading(true);
+          setError("");
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+            { signal: controller.signal }
+          );
+
+          if (!res.ok) {
+            throw new Error("Something went wrong with fetching movies.");
+          }
+
+          const data = await res.json();
+
+          if (data.Response === "False") throw new Error("Movie not found");
+          const movies = data.Search;
+          setMovies(movies);
+          setError("");
+        } catch (error) {
+          console.error(error.message);
+          if (error.name !== "AbortError") {
+            setError(error.message);
+          }
+        } finally {
+          setIsLoading(false);
+        }
       }
-    });
-  }, []);
+
+      if (query.length < 3) {
+        setMovies([]);
+        setError("");
+        return;
+      }
+
+      handleCloseMovie();
+
+      fetchMovies();
+
+      return function () {
+        controller.abort();
+      };
+    },
+    [query]
+  );
 
   return (
     <>
@@ -237,6 +278,21 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const watchedUserRating = watched.find(
     (m) => m.imdbID === selectedId
   )?.userRating;
+
+  useEffect(
+    function () {
+      function callback(e) {
+        if (e.code === "Escape") {
+          onCloseMovie();
+        }
+      }
+      document.addEventListener("keydown", callback);
+      return function () {
+        document.removeEventListener("keydown", callback);
+      };
+    },
+    [onCloseMovie]
+  );
 
   const {
     Title: title,
