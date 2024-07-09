@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 export function useKey(key, action) {
+  console.log("fuck");
   useEffect(
     function () {
       function callback(e) {
