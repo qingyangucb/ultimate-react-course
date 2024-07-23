@@ -35,6 +35,42 @@
         "lng": 13.376933665713324
       },
       "id": 98443197
+    },
+    {
+      "cityName": "Sotonera, La",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2024-07-23T16:36:16.009Z",
+      "notes": "shit",
+      "position": {
+        "lat": "42.17819763004668",
+        "lng": "-0.5045596197232062"
+      },
+      "id": 98443198
+    },
+    {
+      "cityName": "Daneborg",
+      "country": "Greenland",
+      "emoji": "🇬🇱",
+      "date": "2024-07-23T16:39:40.159Z",
+      "notes": "cold",
+      "position": {
+        "lat": "71.29783376975534",
+        "lng": "-37.788204533236566"
+      },
+      "id": 98443199
+    },
+    {
+      "cityName": "Guajara-Mirim",
+      "country": "Brazil",
+      "emoji": "🇧🇷",
+      "date": "2024-07-23T16:40:01.236Z",
+      "notes": "hot",
+      "position": {
+        "lat": "-11.75950191064506",
+        "lng": "-64.65891771665605"
+      },
+      "id": 98443200
     }
   ]
 }
