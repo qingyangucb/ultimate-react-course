@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useParams, useSearchParams } from "react-router-dom";
 import styles from "./City.module.css";
-import { useCities } from "../contexts/CitiesContext";
+import { useCities } from "../hooks/useCities";
 import { useEffect } from "react";
 import Button from "./Button";
 import Spinner from "./Spinner";

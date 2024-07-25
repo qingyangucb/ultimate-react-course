@@ -11,7 +11,8 @@ import "react-calendar/dist/Calendar.css";
 import { useURLPosition } from "../hooks/useURLPosition";
 import Message from "./Message";
 import Spinner from "./Spinner";
-import { useCities } from "../contexts/CitiesContext";
+import { useCities } from "../hooks/useCities";
+import { useNavigate } from "react-router-dom";
 const VITE_BIG_DATA_KEY = import.meta.env.VITE_BIG_DATA_KEY;
 
 export function convertToEmoji(countryCode) {
@@ -27,6 +28,7 @@ const BASE_URL = `https://api.bigdatacloud.net/data/reverse-geocode?`;
 function Form() {
   const [lat, lng] = useURLPosition();
   const { createCity, isLoading } = useCities();
+  const navigate = useNavigate();
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
   const [date, setDate] = useState(new Date());
@@ -63,7 +65,7 @@ function Form() {
     [lat, lng]
   );
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (!cityName || !date) return;
@@ -76,7 +78,8 @@ function Form() {
       position: { lat, lng },
     };
 
-    createCity(newCity);
+    await createCity(newCity);
+    navigate("/app");
   }
 
   if (isLoadingGeoCoding) return <Spinner />;
