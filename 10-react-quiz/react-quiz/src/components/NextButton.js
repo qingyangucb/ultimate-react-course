@@ -1,7 +1,9 @@
+import { memo } from "react";
 import { useQuiz } from "../context/QuizContext";
 
-function NextButton() {
+const NextButton = memo(function NextButton() {
   const { dispatch, answer, numQuestions, index } = useQuiz();
+  console.log("hello");
 
   if (answer === null) return null;
 
@@ -21,6 +23,6 @@ function NextButton() {
         finish
       </div>
     );
-}
+});
 
 export default NextButton;
