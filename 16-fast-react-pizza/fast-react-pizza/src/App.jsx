@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         path: '/menu',
         element: <Menu />,
         loader: menuLoader,
-        errorElement: <Error />,
+        // errorElement: <Error />,
       },
       {
         path: '/cart',
@@ -36,9 +36,10 @@ const router = createBrowserRouter([
         path: '/order/:orderId',
         element: <Order />,
         loader: orderLoader,
-        errorElement: <Error />,
+        // errorElement: <Error />,
       },
     ],
+    errorElement: <Error />,
   },
 ]);
 
