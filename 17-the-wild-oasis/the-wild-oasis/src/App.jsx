@@ -1,31 +1,24 @@
-import styled from "styled-components";
-
-const H1 = styled.h1`
-  background-color: yellow;
-  font-size: 30px;
-  font-weight: 600;
-`;
-
-const Button = styled.button`
-  font-size: 1.4rem;
-  padding: 1.2rem, 1.6rem;
-  font-weight: 500;
-  border: none;
-  border-radius: 7px;
-  background-color: purple;
-  color: white;
-  cursor: pointer;
-  margin: 20px;
-`;
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import DashBoard from "./pages/Dashboard"
 
 function App() {
   return (
-    <div>
-      <H1>Hello World</H1>
-      <Button onClick={() => console.log("Checking in")}>Check in</Button>
-      <Button onClick={() => console.log("Checking out")}>Check out</Button>
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path='dashboard' element={<Dashboard />} />
+        <Route path='bookings' element={<Dashboard />} />
+        <Route path='users' element={<Dashboard />} />
+        <Route path='settings' element={<Dashboard />} />
+        <Route path='account' element={<Dashboard />} />
+        <Route path='login' element={<Dashboard />} />
+        <Route path='*' element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default App;
+expo<BrowserRrBrowserRouteruter>
+  <Routes>
+    <Route path='dashboard'  />
+  </Routes>
+</BrowserRruter>
