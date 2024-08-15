@@ -14,6 +14,7 @@ function Order() {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const order = useLoaderData();
   const fetcher = useFetcher();
+
   useEffect(
     function () {
       if (!fetcher.data && fetcher.state === 'idle') fetcher.load('/menu');
@@ -56,7 +57,7 @@ function Order() {
             : 'Order should have arrived'}
         </p>
         <p className="text-xs text-stone-500">
-          (Estimated delivery: {formatDate(estimatedDelivery)})
+          Estimated delivery: {formatDate(estimatedDelivery)}
         </p>
       </div>
 
