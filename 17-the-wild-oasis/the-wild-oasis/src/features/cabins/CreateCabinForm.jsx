@@ -1,14 +1,11 @@
 /* eslint-disable react/prop-types */
-import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import Input from "../../ui/Input";
 import Form from "../../ui/Form";
 import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
-import { createEditCabin } from "../../services/apiCabins";
 import FormRow from "../../ui/FormRow";
 import useCreateCabin from "./useCreateCabin";
 import useEditCabin from "./useEditCabin";
@@ -31,7 +28,11 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     if (isEditSession)
       editCabin(
         { newCabinData: { ...data, image }, id: editId },
-        { onSeccess: (data) => reset() }
+        {
+          onSeccess: (data) => {
+            reset();
+          },
+        }
       );
     else
       createCabin(
