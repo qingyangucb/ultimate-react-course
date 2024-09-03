@@ -121,6 +121,8 @@ function Button({ children, icon, onClick }) {
   const { close } = useContext(MenusContext);
 
   function handleClick() {
+    console.log("shit sucks");
+    console.log(onClick);
     onClick?.();
     close();
   }

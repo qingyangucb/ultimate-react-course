@@ -64,6 +64,7 @@ function CabinRow({ cabin }) {
   const { createCabin, isCreating } = useCreateCabin();
 
   function handleDuplicate() {
+    console.log("cockpuncher");
     createCabin({
       name: `${name} (Copy)`,
       maxCapacity,
@@ -86,40 +87,34 @@ function CabinRow({ cabin }) {
       )}
       <div>
         <Modal>
-          <Modal.Open opens="edit">
-            <button>
-              <HiPencil />
-            </button>
-          </Modal.Open>
-          <Modal.Window name="edit">
-            <CreateCabinForm cabinToEdit={cabin} />
-          </Modal.Window>
+          <Menus.Menu>
+            <Menus.Toggle id={cabinId} />
+            <Menus.List id={cabinId}>
+              <Modal.Open opens="edit">
+                <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+              </Modal.Open>
 
-          <Modal.Open opens="delete">
-            <button>
-              <HiTrash />
-            </button>
-          </Modal.Open>
-          <Modal.Window name="delete">
-            <ConfirmDelete
-              resourceName="cabins"
-              disabled={isDeleting}
-              onConfirm={() => deleteCabin(cabinId)}
-            />
-          </Modal.Window>
+              <Modal.Open opens="delete">
+                <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+              </Modal.Open>
+
+              <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
+                Duplicate
+              </Menus.Button>
+            </Menus.List>
+
+            <Modal.Window name="delete">
+              <ConfirmDelete
+                resourceName="cabins"
+                disabled={isDeleting}
+                onConfirm={() => deleteCabin(cabinId)}
+              />
+            </Modal.Window>
+            <Modal.Window name="edit">
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+          </Menus.Menu>
         </Modal>
-
-        <Menus.Menu>
-          <Menus.Toggle id={cabinId} />
-
-          <Menus.List id={cabinId}>
-            <Menus.Button icon={<HiSquare2Stack />}>Edit</Menus.Button>
-            <Menus.Button icon={<HiPencil />} onClick={handleDuplicate}>
-              Duplicate
-            </Menus.Button>
-            <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
-          </Menus.List>
-        </Menus.Menu>
       </div>
     </Table.Row>
   );
